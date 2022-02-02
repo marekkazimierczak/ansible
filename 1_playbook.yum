@@ -1,0 +1,23 @@
+---
+- name: install and copy file to remote
+  become: True
+  hosts: all  
+
+  tasks:  
+  - name: Install yum package in Ansible example  
+    yum:  
+      name: redis
+      state: present  
+      update_cache: true
+    become: true
+
+  - name: copying file with playbook
+    become: true 
+    copy:
+      src: /tmp/README.md
+      dest: /tmp/README.md.{{ansible_date_time.date}}
+      remote_src: yes
+      owner: apache
+      group: apache        
+      mode: 0644
+
